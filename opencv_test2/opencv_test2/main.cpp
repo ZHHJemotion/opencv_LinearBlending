@@ -18,7 +18,8 @@ using namespace cv;
 using namespace std;
 
 bool ROI_AddImage();
-
+bool LinearBlending();
+bool ROI_LinearBlending();
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -41,7 +42,7 @@ int main(int argc, const char * argv[]) {
     ROI_AddImage();
     LinearBlending();
     ROI_LinearBlending();
-    
+
     waitKey(0);
     return 0;
 }
