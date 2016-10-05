@@ -39,6 +39,8 @@ int main(int argc, const char * argv[]) {
     //system("color 5E"); ?????????????????????
     
     ROI_AddImage();
+    LinearBlending();
+    ROI_LinearBlending();
     
     waitKey(0);
     return 0;
@@ -64,7 +66,7 @@ bool ROI_AddImage()
     // 加载掩模（必须是灰度图 Grayscale）
     Mat mask = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota_logo.jpg",0);
     
-    // 将掩模拷贝到ROI中
+    // 将掩模拷贝到ROI
     logoImage.copyTo(imageROI,mask);
     
     // 显示结果
@@ -79,7 +81,7 @@ bool ROI_AddImage()
 //   Describe: using cv::addWeighted() realize the linear blend of images
 //          dst = src1[I]*alpha+ src2[I]*beta + gamma
 // ========================================================================================
-bool LinearBleding()
+bool LinearBlending()
 {
     
     // 定义一些局部变量
@@ -90,8 +92,7 @@ bool LinearBleding()
     // 读取图像（两幅图须为同样的类型和尺寸）
     srcImage2 = imread(PATH+string("mogu.jpg"));
     srcImage3 = imread(PATH+string("rain.jpg"));
-    
-    // Exception handling
+    // Exception Handling
     if(!srcImage2.data) { printf("error: can't read the mogu.jpg! \n"); return false;}
     if(!srcImage3.data) { printf("error: can't read the rain.jpg! \n"); return false;}
     
@@ -99,14 +100,44 @@ bool LinearBleding()
     betaValue = 1.0 - alphaValue;
     addWeighted(srcImage2, alphaValue, srcImage3, betaValue, 0.0, dstImage);
     
-    //
+    // 创建并显示原图窗口
+    namedWindow("线性混合示例窗口_原图",1);
+    imshow("线性混合示例窗口_原图",srcImage2);
+    
+    namedWindow("线性混合示例窗口_效果图",1);
+    imshow("线性混合示例窗口_效果图", dstImage);
     
     return true;
 }
 
-
-
-
+// ================================ ROI_LinearBlending() Function ===========================
+//  Describe: Linear blend makes the linear blend of image come true. Using cv::addWeighted()
+//   with ROI(region of interest) to realize the linear blend in the custom region
+// ==========================================================================================
+bool ROI_LinearBlending()
+{
+    // 读取图像
+    Mat srcImage4 = imread(PATH+string("dota_pa.jpg"),1);
+    Mat logoImage = imread(PATH+string("dota_logo.jpg"));
+    // Exception handling
+    if(!srcImage4.data) { printf("error: can't read the dota_pa.jpg! \n"); return false;}
+    if(!logoImage.data) { printf("error: can't read the dota_logo.jpg! \n"); return false;}
+   
+    // 定义一个Mat类型并为其设定ROI区域
+    Mat imageROI;
+    imageROI = srcImage4(Rect(200,250,logoImage.cols,logoImage.rows));
+    // another Methode
+    //imageROI = srcImage4(Range(250, 250+logoImage.cols),Range(200, 200+logoImage.rows));
+    
+    // 将logo加到原图上
+    addWeighted(imageROI, 0.5, logoImage, 0.3, 0., imageROI);
+    
+    // 显示结果
+    namedWindow("区域线性图像混合示例窗口");
+    imshow("区域线性图像混合示例窗口",srcImage4);
+    
+    return true;
+}
 
 
 
