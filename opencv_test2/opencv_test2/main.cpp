@@ -62,7 +62,7 @@ bool ROI_AddImage()
     if(!logoImage.data){printf("error: can't read the dota_logo.jpg! \n"); return false;}
     
     // 定义一个Mat类型并为其设定ROI区域
-    Mat imageROI = srcImage1(Rect(200,250,logoImage.cols,logoImage.rows));
+    Mat imageROI = srcImage1(Rect(100,300,logoImage.cols,logoImage.rows));
     
     // 加载掩模（必须是灰度图 Grayscale）
     Mat mask = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota_logo.jpg",0);
