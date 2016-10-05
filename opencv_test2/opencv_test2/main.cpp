@@ -40,7 +40,7 @@ int main(int argc, const char * argv[]) {
 
 // ================================= ROI_AddImage() Function =============================
 //   Describe: use ROI to realize the superimposition of images
-// ================================================================================
+// =======================================================================================
 bool ROI_AddIamge()
 {
     
@@ -48,8 +48,8 @@ bool ROI_AddIamge()
     Mat scrImage1 = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota.jpg");
     Mat logoImage = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota_logo.jpg");
     // Exception Handling
-    if(!scrImage1.data){printf("error: can't read the dota.jpg! \n"); return false}
-    if(!logoImage.data){printf("error: can't read the dota_logo.jpg! \n"); return false}
+    if(!scrImage1.data){printf("error: can't read the dota.jpg! \n"); return false;}
+    if(!logoImage.data){printf("error: can't read the dota_logo.jpg! \n"); return false;}
     
     
     return true;
