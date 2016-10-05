@@ -10,15 +10,19 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <string>
+
+#define PATH string("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/")
 
 using namespace cv;
 using namespace std;
 
 bool ROI_AddImage();
 
+
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    //std::cout << "Hello, World!\n";
     
     //VideoCapture cap(0);
     //if(!cap.isOpened()){
@@ -32,32 +36,73 @@ int main(int argc, const char * argv[]) {
     //    if(waitKey(30) >= 0) break;
     //}
     
+    //system("color 5E"); ?????????????????????
     
+    ROI_AddImage();
     
-    
+    waitKey(0);
     return 0;
 }
 
 // ================================= ROI_AddImage() Function =============================
-//   Describe: use ROI to realize the superimposition of images
+//   Describe: using ROI to realize the superimposition of images
 // =======================================================================================
-bool ROI_AddIamge()
+bool ROI_AddImage()
 {
     
-    // 1st: read the image
-    Mat scrImage1 = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota.jpg");
-    Mat logoImage = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota_logo.jpg");
-    // Exception Handling
-    if(!scrImage1.data){printf("error: can't read the dota.jpg! \n"); return false;}
+    // 读入图像
+    String doat = PATH + "dota.jpg";
+    Mat srcImage1 = imread(string(PATH+"dota.jpg"));
+    Mat logoImage = imread(string(PATH+"dota_logo.jpg"));
+    // Exception Handling 异常处理
+    if(!srcImage1.data){printf("error: can't read the dota.jpg! \n"); return false;}
     if(!logoImage.data){printf("error: can't read the dota_logo.jpg! \n"); return false;}
     
+    // 定义一个Mat类型并为其设定ROI区域
+    Mat imageROI = srcImage1(Rect(200,250,logoImage.cols,logoImage.rows));
+    
+    // 加载掩模（必须是灰度图 Grayscale）
+    Mat mask = imread("/Users/zhangxingjian/Desktop/Programming/C++/OpenCV/opencv_test2/opencv_test2/opencv_test2/dota_logo.jpg",0);
+    
+    // 将掩模拷贝到ROI中
+    logoImage.copyTo(imageROI,mask);
+    
+    // 显示结果
+    namedWindow("利用ROI实现图像叠加示例窗口");
+    imshow("利用ROI实现图像叠加示例窗口", srcImage1);
     
     return true;
 
 }
 
-
-
+// ============================== LinearBlending() Function ===============================
+//   Describe: using cv::addWeighted() realize the linear blend of images
+//          dst = src1[I]*alpha+ src2[I]*beta + gamma
+// ========================================================================================
+bool LinearBleding()
+{
+    
+    // 定义一些局部变量
+    double alphaValue = 0.5;
+    double betaValue;
+    Mat srcImage2, srcImage3, dstImage;
+    
+    // 读取图像（两幅图须为同样的类型和尺寸）
+    srcImage2 = imread(PATH+string("mogu.jpg"));
+    srcImage3 = imread(PATH+string("rain.jpg"));
+    
+    // Exception handling
+    if(!srcImage2.data) { printf("error: can't read the mogu.jpg! \n"); return false;}
+    if(!srcImage3.data) { printf("error: can't read the rain.jpg! \n"); return false;}
+    
+    // 做图像混合加权操作
+    betaValue = 1.0 - alphaValue;
+    addWeighted(srcImage2, alphaValue, srcImage3, betaValue, 0.0, dstImage);
+    
+    //
+    
+    return true;
+}
 
 
 
