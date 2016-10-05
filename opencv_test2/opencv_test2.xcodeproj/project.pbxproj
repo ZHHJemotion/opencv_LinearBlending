@@ -218,6 +218,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 2U7QTC95XD;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lopencv_core",
+					"\n-lopencv_highgui\n-lopencv_imgproc\n-lopencv_video",
+					"\n-lopencv_contrib",
+					"\n-lopencv_legacy",
+					"\n-lopencv_flann",
+					"\n-lopencv_features2d\n",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -226,6 +236,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 2U7QTC95XD;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lopencv_core",
+					"\n-lopencv_highgui\n-lopencv_imgproc\n-lopencv_video",
+					"\n-lopencv_contrib",
+					"\n-lopencv_legacy",
+					"\n-lopencv_flann",
+					"\n-lopencv_features2d\n",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
